@@ -1,3 +1,4 @@
+
 # Robot Explorer — Browser ↔ Local Python Bridge
 
 **Proxie DevOps Assignment — Round 1**
@@ -112,3 +113,9 @@ prints confirmation once done.
   WebSocket client, in exchange for needing zero changes to the hosted page.
 - **Tab lifetime**: like any CDP-based approach, if the tab closes or
   navigates away, the bridge session ends and needs reattaching.
+
+  <img width="1917" height="1078" alt="Screenshot 2026-09-20 163142" src="https://github.com/user-attachments/assets/8ced38cc-e44e-44ef-ae9f-aab4d26f5f67" />
+  <img width="1917" height="1078" alt="Screenshot 2026-09-20 162950" src="https://github.com/user-attachments/assets/1015d57a-e70a-4304-b144-cee3b8539c84" />
+<img width="1917" height="1078" alt="Screenshot 2026-09-20 163159" src="https://github.com/user-attachments/assets/8a8a247d-d684-43e6-8e38-a565936c7329" />
+<img width="1917" height="1078" alt="Screenshot 2026-09-20 163247" src="https://github.com/user-attachments/assets/58884cc2-fcae-42de-b6e5-ae985dcce31e" />
+<img width="1917" height="1078" alt="Screenshot 2026-09-20 162922" src="https://github.com/user-attachments/assets/6f2c2468-0964-43f2-b7ae-0c8fea96bb07" />
