@@ -74,3 +74,41 @@ URL = "https://robot-explorer-umber.vercel.app/"
 
 On running, a Chromium window opens showing the hosted robot page, and the
 terminal starts printing the live state stream:
+
+x=18.17 z=24.24 yaw=-1.11
+
+
+A few seconds in, Python sends a drive-forward command on its own — the
+robot visibly moves without the keyboard being touched, and the terminal
+prints confirmation once done.
+
+## Why this mechanism
+
+- **vs. a Chrome extension + native messaging**: an extension needs to be
+  installed, granted host permissions on the specific hosted origin, and
+  paired with a native-messaging host just to get bytes to Python. CDP gets
+  the same push-based access with one Python script and no packaged
+  browser add-on.
+- **vs. hand-rolling raw CDP over `websockets`**: Playwright *is* CDP under
+  the hood — it just handles the connection/lifecycle boilerplate, so the
+  bridge code stays short and easy to read.
+- **vs. a self-hosted WebSocket relay**: that approach needs a script added
+  *inside* the hosted page to open the socket — a change to the "static"
+  deliverable on every redeploy. This bridge needs zero changes to
+  `index.html` or the hosting itself.
+
+## Trade-offs, honestly
+
+- **Latency**: the exposed-function round trip through CDP is a few
+  milliseconds — well under one render frame at 60fps, comfortably inside
+  the "sub-second" real-time bar.
+- **Security / permissions**: this is real browser automation — Python has
+  full read/write access to whatever tab it's attached to (DOM, JS,
+  network). That's the right level of access for this task, but not
+  something to point at a tab with untrusted content or a logged-in session
+  you don't control.
+- **Dependency weight**: needs a real Chromium binary locally
+  (`playwright install chromium`, a couple hundred MB) — heavier than a bare
+  WebSocket client, in exchange for needing zero changes to the hosted page.
+- **Tab lifetime**: like any CDP-based approach, if the tab closes or
+  navigates away, the bridge session ends and needs reattaching.
